@@ -107,4 +107,40 @@ class TrackingActivity extends MvpActivity implements TrackingView {
 
   所以，这不是作者建议采纳的解决方案。
 
-- ​
+- 让`GpsTracker`对View不可见
+
+​       具体代码如下：
+
+```java
+class LifecycleController  extends DefaultActivityLightCycle {
+  private GpsTracker tracker;
+
+  @Inject
+  public LifecycleController(GpsTracker tracker){ ... }
+
+  @Override
+  public void onPause(){
+    tracker.stop();
+  }
+
+  @Override
+  public void onResume(){
+    tracker.start();
+  }
+}
+```
+
+此时Activity还是可以当成是`TrackView`：
+
+```java
+class TrackingActivity extends MvpActivity implements TrackingView {
+
+    @Inject @LightCycle LifecycleController lifecycleController;
+
+    @Override
+    public void createPresenter(){ // Called by Mosby
+          return new TrackingPresenter(tracker);
+     }
+}
+```
+
