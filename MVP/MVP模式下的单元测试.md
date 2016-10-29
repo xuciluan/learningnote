@@ -2,7 +2,7 @@
 
 MVP各层所使用的单元测试框架如下：
 
- ![mvp](E:\学习笔记\图片\mvp.PNG)
+ ![mvp](图片\mvp.PNG)
 
 - P层： 不需要任何Android环境，因此使用Junit测试即可。
 
